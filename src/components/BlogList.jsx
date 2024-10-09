@@ -33,7 +33,7 @@ const BlogList = () => {
     <div>
       <h2 className='text-center text-blue-900 font-bold text-2xl p-4'>Blog Posts</h2>
 
-      <Link to="/create" className='text-center text-blue-900 font-semibold text-xl p-4 cursor-pointer border-2 border-blue-900 rounded-xl mt-14 m-10'>
+      <Link to="/create" className='  hover:bg-blue-400 hover:text-white hover:border-2 hover:border-white text-center text-blue-900 font-semibold text-xl p-4 cursor-pointer border-2 border-blue-900 rounded-xl mt-14 m-10'>
         Create New Blog
       </Link>
 
