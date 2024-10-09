@@ -10,13 +10,11 @@ const EditPost = () => {
     const posts = useSelector((state) => state.blog.posts);
     const post = posts.find((p) => p.id === Number(id));
 
-    // State for form fields
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch posts if post is not available
         if (!post) {
             dispatch(fetchPosts()).then(() => {
                 const fetchedPost = posts.find((p) => p.id === Number(id));
@@ -37,19 +35,15 @@ const EditPost = () => {
         e.preventDefault();
         const updatedPost = { id: Number(id), title, body };
         
-        // Dispatch the update action
-        const result = await dispatch(updatePost(updatedPost));
+        const result =  dispatch(updatePost(updatedPost));
 
         if (updatePost.fulfilled.match(result)) {
-            // Successfully updated
             navigate('/');
         } else {
-            // Handle error case here
             console.error("Failed to update post:", result.error);
         }
     };
 
-    // Display loading message if data is being fetched
     if (loading) {
         return <div>Loading...</div>;
     }

@@ -33,20 +33,22 @@ const blogSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-        .addCase(fetchPosts.fulfilled, (state, action) => {
-            state.posts = action.payload;
-        })
-        .addCase(updatePost.fulfilled, (state, action) => {
-            const index = state.posts.findIndex(post => post.id === action.payload.id);
-            if (index !== -1) {
-                state.posts[index] = action.payload;  
-            }
-        })
-        .addCase(deletePost.fulfilled, (state, action) => {
-            state.posts = state.posts.filter((post) => post.id !== action.payload);
-        });
-}
-
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.posts = action.payload;
+      })
+      .addCase(createPost.fulfilled, (state, action) => {
+        state.posts.push(action.payload);
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        const index = state.posts.findIndex(post => post.id === action.payload.id);
+        state.posts[index] = action.payload;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.posts = state.posts.filter(post => post.id !== action.payload);
+      });
+  },
 });
 
 export default blogSlice.reducer;
+
+
