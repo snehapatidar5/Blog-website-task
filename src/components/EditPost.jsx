@@ -15,30 +15,31 @@ const EditPost = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!post) {
-            dispatch(fetchPosts()).then(() => {
-                const fetchedPost = posts.find((p) => p.id === Number(id));
-                if (fetchedPost) {
-                    setTitle(fetchedPost.title);
-                    setBody(fetchedPost.body);
-                }
-                setLoading(false);
-            });
-        } else {
-            setTitle(post.title);
-            setBody(post.body);
+        const loadPost = async () => {
+            if (!post) {
+                await dispatch(fetchPosts());
+            }
+
+            const fetchedPost = posts.find((p) => p.id === Number(id));
+            if (fetchedPost) {
+                setTitle(fetchedPost.title);
+                setBody(fetchedPost.body);
+            }
             setLoading(false);
-        }
+        };
+
+        loadPost();
     }, [dispatch, post, id, posts]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedPost = { id: Number(id), title, body };
-        
-        const result =  dispatch(updatePost(updatedPost));
+
+        // Await the dispatch to ensure it's resolved
+        const result = await dispatch(updatePost(updatedPost));
 
         if (updatePost.fulfilled.match(result)) {
-            navigate('/');
+            navigate('/'); // Navigate on success
         } else {
             console.error("Failed to update post:", result.error);
         }
