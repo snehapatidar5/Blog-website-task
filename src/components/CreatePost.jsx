@@ -26,13 +26,13 @@ const CreatePost = () => {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Post Title"
+        placeholder="Blog Title"
         required
       />
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder="Post Content"
+        placeholder="Blog Content"
         required
       />
       <button type="submit" className='text-white bg-blue-900 rounded-lg px-4 py-2'>Create Post</button>

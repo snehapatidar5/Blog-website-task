@@ -19,10 +19,10 @@ const PostDetail = () => {
   }, [dispatch, post]);
 
   return post ? (
-    <div className=' w-[50%] p-2  border-2 border-blue-900 rounded-xl mt-14 m-10 mx-auto'>
+    <div className=' w-[50%] p-2 background  rounded-xl mt-14 m-10 mx-auto'  >
       <img src ={Blog} className='w-20 h-20 mx-auto'/>
-      <h2 className='p-2'><span className=' text-xl font-semibold' >Title:</span> {post.title}</h2>
-      <p className='p-2'>{post.body}</p>
+      <h2 className='p-2  text-white'><span className=' text-xl font-semibold  text-white' >Title:</span> {post.title}</h2>
+      <p className='p-2  text-white'>{post.body}</p>
     </div>
   ) : <div>Loading...</div>;
 };

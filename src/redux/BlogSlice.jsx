@@ -13,10 +13,10 @@ export const createPost = createAsyncThunk('blog/createPost', async (newPost) =>
   return response.data;
 });
 
-export const updatePost = createAsyncThunk('blog/updatePost', async ({ id, post }) => {
-  const response = await axios.put(`${API_URL}/${id}`, post);
-  console.log("Updated Post Response:", response.data); 
-  return response.data;
+export const updatePost = createAsyncThunk('blog/updatePost', async (post) => {
+  const response = await axios.put(`${API_URL}/${post.id}`, post);
+  console.log("Updated Post Response:", response.data,post); 
+  return post;
 });
 
 
@@ -46,7 +46,8 @@ const blogSlice = createSlice({
             state.posts.push(action.payload);
         })
         .addCase(updatePost.fulfilled, (state, action) => {
-            const index = state.posts.findIndex((post) => post.id === action.payload.id);
+            console.log('payload',state,action);
+             const index = state.posts.findIndex((post) => post.id === action.payload.id);
             if (index !== -1) {
                 state.posts[index] = action.payload;
             }

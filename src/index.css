@@ -53,9 +53,11 @@ input, textarea {
 
 .page-link {
   padding: 10px 15px;
-  background-color: #1e3a8a;
+  background-color: rgb(51,116,244);
   color: white;
   border: none;
+  border-radius:20px;
+
   cursor: pointer;
 }
 

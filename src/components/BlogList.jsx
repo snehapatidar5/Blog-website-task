@@ -21,8 +21,10 @@ const BlogList = () => {
         console.error('Failed to fetch posts:', error);
       }
     };
+ if(posts.length === 0){
+  fetchData();
 
-    fetchData();
+ }
   }, [dispatch]);
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -50,11 +52,6 @@ const BlogList = () => {
   };
 
  
-  
-    
-
-
-
   return (
     <div>
       <motion.h2  initial="hidden"
@@ -73,12 +70,12 @@ const BlogList = () => {
         {currentPosts.map((post, index) => (
   <motion.div 
     key={post.id} 
-    className='p-4 border-2 border-blue-900 h-[250px] rounded-lg' 
+    className='p-4 background h-[250px] rounded-lg hover:-translate-y-1 hover:scale-105  duration-300 transition ease-in-out' 
    
   >
     <img src={Blog} className='w-14 h-14 mx-auto'/>
 
-    <li className='h-[100px]'>
+    <li className='h-[100px] text-white'>
       <Link to={`/post/${post.id}`}>
         {`${indexOfFirstPost + index + 1}. ${post.title}`}
       </Link>
@@ -87,13 +84,13 @@ const BlogList = () => {
       <Link
         to={`/edit/${post.id}`}
       
-        className='hover:bg-green-400 hover:text-white hover:border-2 hover:border-white border-2 border-blue-900 rounded-2xl px-4 p-0 sm:px-3 sm:py-1 sm:text-sm md:px-5 md:py-2 md:text-base lg:px-6 lg:py-3 lg:text-lg transition-all duration-300 ease-in-out'>
+        className='hover:bg-green-400 text-white border-2 boredr-white rounded-2xl px-4 p-0 sm:px-3 sm:py-1 sm:text-sm md:px-5 md:py-2 md:text-base lg:px-6 lg:py-3 lg:text-lg transition-all duration-300 ease-in-out'>
         Edit
       </Link>
 
       <button
         onClick={() => dispatch(deletePost(post.id))}
-        className='hover:bg-red-400 hover:text-white hover:border-2 hover:border-white border-2 border-blue-900 rounded-2xl px-4 p-0 sm:px-3 sm:py-1 sm:text-sm md:px-5 md:py-2 md:text-base lg:px-6 lg:py-3 lg:text-lg transition-all duration-300 ease-in-out'>
+        className='hover:bg-red-400 text-white border-2 boredr-white rounded-2xl px-4 p-0 sm:px-3 sm:py-1 sm:text-sm md:px-5 md:py-2 md:text-base lg:px-6 lg:py-3 lg:text-lg transition-all duration-300 ease-in-out'>
         Delete
       </button>
     </div>
