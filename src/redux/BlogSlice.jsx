@@ -15,8 +15,10 @@ export const createPost = createAsyncThunk('blog/createPost', async (newPost) =>
 
 export const updatePost = createAsyncThunk('blog/updatePost', async ({ id, post }) => {
   const response = await axios.put(`${API_URL}/${id}`, post);
+  console.log("Updated Post Response:", response.data); 
   return response.data;
 });
+
 
 export const deletePost = createAsyncThunk('blog/deletePost', async (id) => {
   await axios.delete(`${API_URL}/${id}`);
@@ -33,20 +35,29 @@ const blogSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.posts = action.payload;
-      })
-      .addCase(createPost.fulfilled, (state, action) => {
-        state.posts.push(action.payload);
-      })
-      .addCase(updatePost.fulfilled, (state, action) => {
-        const index = state.posts.findIndex(post => post.id === action.payload.id);
-        state.posts[index] = action.payload;
-      })
-      .addCase(deletePost.fulfilled, (state, action) => {
-        state.posts = state.posts.filter(post => post.id !== action.payload);
-      });
-  },
+        .addCase(fetchPosts.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(fetchPosts.fulfilled, (state, action) => {
+            state.loading = false;
+            state.posts = action.payload;
+        })
+        .addCase(createPost.fulfilled, (state, action) => {
+            state.posts.push(action.payload);
+        })
+        .addCase(updatePost.fulfilled, (state, action) => {
+            const index = state.posts.findIndex((post) => post.id === action.payload.id);
+            if (index !== -1) {
+                state.posts[index] = action.payload;
+            }
+        })
+        .addCase(deletePost.fulfilled, (state, action) => {
+            state.posts = state.posts.filter((post) => post.id !== action.payload);
+        })
+      
+      
+},
+
 });
 
 export default blogSlice.reducer;

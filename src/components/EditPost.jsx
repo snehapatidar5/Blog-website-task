@@ -8,7 +8,7 @@ const EditPost = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const posts = useSelector((state) => state.blog.posts);
-    const post = posts.find((p) => p.id === Number(id));
+    const post = posts.find((p) => p.id === parseInt(id));
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
@@ -16,11 +16,8 @@ const EditPost = () => {
 
     useEffect(() => {
         const loadPost = async () => {
-            if (!post) {
-                await dispatch(fetchPosts());
-            }
-
-            const fetchedPost = posts.find((p) => p.id === Number(id));
+            await dispatch(fetchPosts());
+            const fetchedPost = posts.find((p) => p.id === parseInt(id));
             if (fetchedPost) {
                 setTitle(fetchedPost.title);
                 setBody(fetchedPost.body);
@@ -29,15 +26,14 @@ const EditPost = () => {
         };
 
         loadPost();
-    }, [dispatch, post, id, posts]);
+    }, [dispatch, id, posts]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedPost = { id: Number(id), title, body };
-
-        // Await the dispatch to ensure it's resolved
+        const updatedPost = { id: parseInt(id), title, body };
+        
         const result = await dispatch(updatePost(updatedPost));
-
+        
         if (updatePost.fulfilled.match(result)) {
             navigate('/'); // Navigate on success
         } else {
@@ -71,3 +67,4 @@ const EditPost = () => {
 };
 
 export default EditPost;
+
