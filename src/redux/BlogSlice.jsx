@@ -15,7 +15,8 @@ export const createPost = createAsyncThunk('blog/createPost', async (newPost) =>
 
 export const updatePost = createAsyncThunk('blog/updatePost', async (post) => {
   const response = await axios.put(`${API_URL}/${post.id}`, post);
-  console.log("Updated Post Response:", response.data,post); 
+  console.log("Updated Post Response:", response.data,post);
+  console.log("post is ",post) 
   return post;
 });
 
@@ -47,6 +48,7 @@ const blogSlice = createSlice({
         })
         .addCase(updatePost.fulfilled, (state, action) => {
             console.log('payload',state,action);
+
              const index = state.posts.findIndex((post) => post.id === action.payload.id);
             if (index !== -1) {
                 state.posts[index] = action.payload;
